@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-// import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,13 +32,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
 // }
 
 export default function Home({ iframeUrl }: Props) {
-  // const ref = useRef<HTMLIFrameElement>(null);
+  const ref = useRef<HTMLIFrameElement>(null);
 
-  // useEffect(() => {
-  //   getHello().then((data) => {
-  //     ref.current?.setAttribute("src", data.name);
-  //   });
-  // }, []);
+  useEffect(() => {
+    ref.current?.setAttribute("src", iframeUrl ?? "");
+  }, [iframeUrl]);
   return (
     <div
       className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
@@ -46,8 +44,7 @@ export default function Home({ iframeUrl }: Props) {
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         This is iframe test
         <iframe
-          // ref={ref}
-          src={`${iframeUrl}`}
+          ref={ref}
           title="YouTube video player"
           width="560"
           height="315"
